@@ -8,19 +8,10 @@ import (
 )
 
 type Html struct {
-	isDebug      bool
-	templateRoot string
-	templateExt  string
-	templates    *template.Template
-}
-
-func NewHtml(isDebug bool, templateRoot, templateExt string) *Html {
-	r := &Html{
-		isDebug:      isDebug,
-		templateRoot: templateRoot,
-		templateExt:  templateExt,
-	}
-	return r
+	IsDebug      bool
+	TemplateRoot string
+	TemplateExt  string
+	Templates    *template.Template
 }
 
 // Html renders a Html response.
@@ -38,7 +29,7 @@ func (r *Html) Html(
 func (r *Html) render(
 	w http.ResponseWriter, templateName string, data interface{},
 ) error {
-	if r.isDebug {
+	if r.IsDebug {
 		return r.loadAndRenderTemplate(w, templateName, data)
 	}
 	return r.cacheAndRenderTemplate(w, templateName, data)
@@ -55,16 +46,16 @@ func (r *Html) cacheAndRenderTemplate(
 	w http.ResponseWriter, templateName string, data interface{},
 ) error {
 	// Load template lazily and cache it.
-	if r.templates != nil {
-		r.templates = r.loadTemplate()
+	if r.Templates == nil {
+		r.Templates = r.loadTemplate()
 	}
-	return r.templates.ExecuteTemplate(w, templateName, data)
+	return r.Templates.ExecuteTemplate(w, templateName, data)
 }
 
 func (r *Html) loadTemplate() *template.Template {
 	tpl := template.Must(
 		xtemplate.ParseWalk(
-			template.New(""), r.templateRoot, r.templateExt,
+			template.New(""), r.TemplateRoot, r.TemplateExt,
 		),
 	)
 	return tpl

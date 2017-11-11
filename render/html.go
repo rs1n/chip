@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"net/http"
 
-	xtemplate "github.com/skkv/chip/x/html/template"
+	xtemplate "github.com/sknv/chip/x/html/template"
 )
 
 type Html struct {

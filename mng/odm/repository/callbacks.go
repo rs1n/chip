@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/skkv/chip/mng/odm/document"
+import "github.com/sknv/chip/mng/odm/document"
 
 func doBeforeInsertIfNeeded(doc interface{}) {
 	if beforeInserter, ok := doc.(document.IBeforeInserter); ok {

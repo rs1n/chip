@@ -5,7 +5,7 @@ import (
 
 	"gopkg.in/mgo.v2"
 
-	"github.com/skkv/chip/mng/middleware"
+	"github.com/sknv/chip/mng/middleware"
 )
 
 // GetMgoSessionForRequest returns a Mongo session from a request context.

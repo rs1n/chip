@@ -4,7 +4,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/skkv/chip/mng/odm/document"
+	"github.com/sknv/chip/mng/odm/document"
 )
 
 var MaxFetchLimit = 50

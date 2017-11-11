@@ -4,7 +4,7 @@ import (
 	"github.com/go-chi/chi"
 	"gopkg.in/mgo.v2"
 
-	"github.com/skkv/chip/mng/middleware"
+	"github.com/sknv/chip/mng/middleware"
 )
 
 // BootstrapRouter puts a Mongo session to a request context.

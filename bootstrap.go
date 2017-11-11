@@ -4,7 +4,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 
-	xmiddleware "github.com/rs1n/chip/middleware"
+	xmiddleware "github.com/sknv/chip/middleware"
 )
 
 // BootstrapRouter plugs standard middleware.

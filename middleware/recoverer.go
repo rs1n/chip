@@ -15,7 +15,7 @@ func Recoverer(next http.Handler) http.Handler {
 					return
 				}
 
-				log.Printf("Panic: %+v\n", rvr)
+				log.Printf("panic: %+v", rvr)
 				debug.PrintStack()
 
 				http.Error(

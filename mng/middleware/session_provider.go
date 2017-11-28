@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"gopkg.in/mgo.v2"
+	"github.com/globalsign/mgo"
 )
 
 const CtxKeyMgoSession = "_mgo.Session"

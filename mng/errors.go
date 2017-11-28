@@ -1,6 +1,6 @@
 package mng
 
-import "gopkg.in/mgo.v2"
+import "github.com/globalsign/mgo"
 
 func IsErrNotFound(err error) bool {
 	return err == mgo.ErrNotFound

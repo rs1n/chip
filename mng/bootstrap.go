@@ -1,8 +1,8 @@
 package mng
 
 import (
+	"github.com/globalsign/mgo"
 	"github.com/go-chi/chi"
-	"gopkg.in/mgo.v2"
 
 	"github.com/sknv/chip/mng/middleware"
 )

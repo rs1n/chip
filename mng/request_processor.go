@@ -3,7 +3,7 @@ package mng
 import (
 	"net/http"
 
-	"gopkg.in/mgo.v2"
+	"github.com/globalsign/mgo"
 
 	"github.com/sknv/chip/mng/middleware"
 )

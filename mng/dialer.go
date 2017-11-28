@@ -1,6 +1,6 @@
 package mng
 
-import "gopkg.in/mgo.v2"
+import "github.com/globalsign/mgo"
 
 func MustDial(dialInfo *mgo.DialInfo) *mgo.Session {
 	session, err := mgo.DialWithInfo(dialInfo)

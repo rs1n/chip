@@ -16,8 +16,6 @@ func Json(w http.ResponseWriter, status int, data interface{}) {
 }
 
 // BindJson binds a Json payload to a destination object.
-func BindJson(req *http.Request, v interface{}) {
-	if err := json.NewDecoder(req.Body).Decode(v); err != nil {
-		panic(err)
-	}
+func BindJson(req *http.Request, v interface{}) error {
+	return json.NewDecoder(req.Body).Decode(v)
 }

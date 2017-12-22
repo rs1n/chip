@@ -6,10 +6,16 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-type Validate struct {
-	*validator.Validate
-	TranslateError
-}
+type (
+	IValidator interface {
+		Validate() ValidationErrors
+	}
+
+	Validate struct {
+		*validator.Validate
+		TranslateError
+	}
+)
 
 func NewValidate(translateError TranslateError) *Validate {
 	// Create a base validator and use json name to represent error's namespace.
@@ -28,15 +34,23 @@ func NewValidate(translateError TranslateError) *Validate {
 	return result
 }
 
-func (v *Validate) Struct(s interface{}) error {
+func (v *Validate) ValidateStruct(s interface{}) error {
 	err := v.Validate.Struct(s)
 	if err != nil {
 		return v.getValidationErrors(err)
 	}
+
+	customValidator, ok := s.(IValidator)
+	if ok {
+		customErrors := customValidator.Validate()
+		if customErrors != nil {
+			return customErrors
+		}
+	}
 	return nil
 }
 
-func (v *Validate) getValidationErrors(err error) error {
+func (v *Validate) getValidationErrors(err error) ValidationErrors {
 	validationErrors := ValidationErrors{}
 	for _, err := range err.(validator.ValidationErrors) {
 		namespace := err.Namespace()

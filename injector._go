@@ -3,10 +3,9 @@ package chip
 import "github.com/facebookgo/inject"
 
 func Inject(result interface{}, dependencies ...interface{}) error {
-	objects := []*inject.Object{
-		{Value: result},
-	}
-	objects = appendDependencyObjects(objects, dependencies)
+	objects := make([]*inject.Object, len(dependencies)+1)
+	objects[0] = &inject.Object{Value: result}
+	fillDependencyObjects(objects, 1, dependencies)
 
 	var graph inject.Graph
 	if err := graph.Provide(objects...); err != nil {
@@ -15,14 +14,13 @@ func Inject(result interface{}, dependencies ...interface{}) error {
 	return graph.Populate()
 }
 
-func appendDependencyObjects(
-	objects []*inject.Object, dependencies []interface{},
-) []*inject.Object {
-	for _, dep := range dependencies {
-		objects = append(objects, &inject.Object{
+func fillDependencyObjects(
+	objects []*inject.Object, startIndex int, dependencies []interface{},
+) {
+	for i, dep := range dependencies {
+		objects[i+startIndex] = &inject.Object{
 			Value:    dep,
 			Complete: true,
-		})
+		}
 	}
-	return objects
 }

@@ -47,6 +47,7 @@ func (v *Validate) ValidateStruct(s interface{}) error {
 			return customErrors
 		}
 	}
+
 	return nil
 }
 

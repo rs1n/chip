@@ -9,20 +9,17 @@ import (
 func Recoverer(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
-			if rvr := recover(); rvr != nil {
-				if rvr == http.ErrAbortHandler {
+			if rcvr := recover(); rcvr != nil {
+				if rcvr == http.ErrAbortHandler {
 					// Response is already flushed.
 					return
 				}
 
-				log.Printf("panic: %+v", rvr)
+				// Print a stack trace.
+				log.Printf("panic: %+v", rcvr)
 				debug.PrintStack()
 
-				http.Error(
-					w,
-					http.StatusText(http.StatusInternalServerError),
-					http.StatusInternalServerError,
-				)
+				http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 			}
 		}()
 

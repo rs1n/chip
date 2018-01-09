@@ -6,6 +6,8 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
+const tagPresense = "present"
+
 type (
 	IValidator interface {
 		Validate() ValidationErrors
@@ -13,7 +15,8 @@ type (
 
 	Validate struct {
 		*validator.Validate
-		TranslateError
+
+		TranslateError TranslateError
 	}
 )
 
@@ -23,9 +26,12 @@ func NewValidate(translateError TranslateError) *Validate {
 	validate.RegisterTagNameFunc(func(field reflect.StructField) string {
 		return field.Tag.Get("json")
 	})
+	if err := validate.RegisterValidation(tagPresense, validatePresense); err != nil {
+		panic(err)
+	}
 
 	if translateError == nil {
-		translateError = GetErrorMessageFor // Default translator.
+		translateError = TranslateErrorMessage
 	}
 	result := &Validate{
 		Validate:       validate,

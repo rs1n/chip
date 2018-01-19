@@ -13,31 +13,31 @@ import (
 // Serve serves the handler at specified port
 // and shuts down server gracefully in a shutdown timeout.
 func Serve(handler http.Handler, port int, shutdownTimeout time.Duration) {
-	srv := startServer(handler, port)
-	shutdownServerGracefully(srv, shutdownTimeout)
+	server := startServer(handler, port)
+	shutdownServerGracefully(server, shutdownTimeout)
 }
 
 func startServer(handler http.Handler, port int) *http.Server {
 	addr := fmt.Sprintf("0.0.0.0:%d", port)
 	log.Printf("Server started on %s", addr)
 
-	srv := &http.Server{
+	server := &http.Server{
 		Addr:    addr,
 		Handler: handler,
 	}
 
 	go func() {
-		if err := srv.ListenAndServe(); err != nil {
+		if err := server.ListenAndServe(); err != nil {
 			// Cannot panic, because this probably is an intentional close.
 			log.Println(err)
 		}
 	}()
 
-	return srv
+	return server
 }
 
 func shutdownServerGracefully(
-	srv *http.Server, shutdownTimeout time.Duration,
+	server *http.Server, shutdownTimeout time.Duration,
 ) {
 	// Wait for interrupt signal to gracefully shutdown the server
 	// with a specified timeout.
@@ -50,7 +50,7 @@ func shutdownServerGracefully(
 	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
 
-	if err := srv.Shutdown(ctx); err != nil {
+	if err := server.Shutdown(ctx); err != nil {
 		panic(err)
 	}
 

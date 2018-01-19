@@ -8,9 +8,9 @@ import (
 
 const filePattern = "/*"
 
-func ServeRoot(r chi.Router, root string) {
+func ServeRoot(router chi.Router, root string) {
 	fs := fileServerForRoot(root)
-	r.Get(filePattern, fs.ServeHTTP)
+	router.Get(filePattern, fs.ServeHTTP)
 }
 
 func fileServerForRoot(root string) http.Handler {

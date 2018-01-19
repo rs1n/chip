@@ -8,7 +8,7 @@ import (
 )
 
 // BootstrapRouter plugs standard middleware.
-func BootstrapRouter(r chi.Router) {
-	r.Use(middleware.Logger)
-	r.Use(xmiddleware.Recoverer)
+func BootstrapRouter(router chi.Router) {
+	router.Use(middleware.Logger)
+	router.Use(xmiddleware.Recoverer)
 }
